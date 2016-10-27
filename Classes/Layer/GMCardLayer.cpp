@@ -180,7 +180,7 @@ CCMenuItemSprite* GMCardLayer::addMenu(const char *normal,const char *selected,b
     CCSprite *selectedSprite1 = CCSprite::createWithSpriteFrameName(selected);
     if(filpx)
         selectedSprite1->setFlipX(true);
-    CCMenuItemSprite* tempItem = CCMenuItemSprite::create(normalSprite1, selectedSprite1,this);
+    CCMenuItemSprite* tempItem = CCMenuItemSprite::create(normalSprite1, selectedSprite1,nullptr);
     SetScale2(tempItem, Scale_X);
     tempItem->setPosition( point );
     tempItem->setAnchorPoint( anc );
@@ -324,7 +324,7 @@ void GMCardLayer::initEachLevel(int index)
     CCMenuItem *tempItem[5];
     for (int i = 0; i < 5; i++) {
         normalSprite[i] = CCSprite::createWithSpriteFrameName("xuanzgk013.png");
-        tempItem[i] = CCMenuItemSprite::create(normalSprite[i], NULL, CC_CALLBACK_1(GMCardLayer::chooseLevel,this));
+        tempItem[i] = CCMenuItemSprite::create(normalSprite[i], normalSprite[i], CC_CALLBACK_1(GMCardLayer::chooseLevel,this));
         int tempTag = level+(i+1);
         if(i==3)
             tempTag = level+(4+1);

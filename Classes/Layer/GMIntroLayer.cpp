@@ -650,8 +650,8 @@ void GMIntroLayer::startGame(Ref *pSender)
     else {
         GMPublicMethod::sharedPublicMethod()->setGameMode(Story_Mode);
         
-        CCScene *pScene = CCTransitionFade::create(0.0, GMCardLayer::scene(), Color3B::WHITE);
-        CCDirector::sharedDirector()->replaceScene(pScene);
+        CCScene *pScene = GMCardLayer::scene();
+        Director::getInstance()->replaceScene(pScene);
     }
 }
 

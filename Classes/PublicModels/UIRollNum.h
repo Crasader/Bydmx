@@ -25,7 +25,7 @@ public:
     ~UIRollNum();
     int             m_nNumber;              //显示的数字
     int             m_maxCol;               //最大显示位数
-    CCArray         *numArray;               //存放每个数字的数组
+    Vector<UINumber *> numArray;               //存放每个数字的数组
     CCPoint         m_point;                //坐标
     bool            zeroFill;               //是否开启0填充
     NumStyle        style;                  //滚动样式

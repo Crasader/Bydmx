@@ -20,7 +20,6 @@ bool UIRollNum::init()
     
     m_nNumber = 0;
     m_maxCol = 6;
-    numArray = new CCArray();//[[NSMutableArray alloc] init];
     zeroFill = true;
     style = NumStyleNormal;
     
@@ -29,8 +28,7 @@ bool UIRollNum::init()
 
 UIRollNum::~UIRollNum(){
     
-    numArray->release();
-    numArray = NULL;
+    numArray.clear();
 }
 
 void UIRollNum::setEffect(const char *name,int col,float w, float h, NumStyle nstyle)
@@ -84,7 +82,7 @@ void UIRollNum::rebuildEffect(){
         }
         int showNum = num%10;
         
-        UINumber* pNumber = (UINumber*)numArray->objectAtIndex(i);
+        UINumber* pNumber = numArray.at(i);
         pNumber->setNumber(showNum);
         i++;
         num = num/10;
@@ -95,17 +93,17 @@ void UIRollNum::rebuildEffect(){
  * rebuildEffect 清楚每位数字  右边为准，
  */
 void UIRollNum::clearEffect(const char *name ,float w,float h){
-    for(int i=0; i <numArray->count(); i++) {
-        UINumber* pNumber = (UINumber *)numArray->objectAtIndex(i);
+    for(int i=0; i <numArray.size(); i++) {
+        UINumber* pNumber = numArray.at(i);
         this->removeChild(pNumber,true);
     }
-    numArray->removeAllObjects();
+    numArray.clear();
 
     for (int i = 0; i < m_maxCol; i++) {
         UINumber* pNumber = UINumber::create(); //[[UINumber alloc] initWithStyle:style];
         pNumber->setTyle(style);
         pNumber->setTexture(name,w,h);
-        numArray->addObject(pNumber);
+        numArray.pushBack(pNumber);
         pNumber->setNumber(0);
         pNumber->setPosition(ccp(m_point.x - i*w, m_point.y));
         pNumber->setAnchorPoint(ccp(1, 0.5));
@@ -118,17 +116,17 @@ void UIRollNum::clearEffect(const char *name ,float w,float h){
  */
 void UIRollNum::clearEffect1(const char *name ,float w,float h)
 {
-    for(int i=0; i <numArray->count(); i++) {
-        UINumber* pNumber = (UINumber *)numArray->objectAtIndex(i);
+    for(int i=0; i <numArray.size(); i++) {
+        UINumber* pNumber = numArray.at(i);
         this->removeChild(pNumber,true);
     }
-    numArray->removeAllObjects();
+    numArray.clear();
     
     for (int i = 0; i < m_maxCol; i++) {
         UINumber* pNumber = UINumber::create(); 
         pNumber->setTyle(style);
         pNumber->setTexture(name,w,h);
-        numArray->addObject(pNumber);
+        numArray.pushBack(pNumber);
         pNumber->setNumber(0);
         pNumber->setPosition(ccp(m_point.x + (m_maxCol/2.0-i*1.0)*w, m_point.y));
         pNumber->setAnchorPoint(ccp(1, 0.5));
@@ -146,17 +144,17 @@ void UIRollNum::clearEffect1(const char *name ,float w,float h)
  */
 void UIRollNum::clearEffectSpriteFrame(const char *name ,float w,float h)
 {
-    for(int i=0; i <numArray->count(); i++) {
-        UINumber* pNumber = (UINumber *)numArray->objectAtIndex(i);
+    for(int i=0; i <numArray.size(); i++) {
+        UINumber* pNumber = numArray.at(i);
         this->removeChild(pNumber,true);
     }
-    numArray->removeAllObjects();
+    numArray.clear();
     
     for (int i = 0; i < m_maxCol; i++) {
         UINumber* pNumber = UINumber::create();
         pNumber->setTyle(style);
         pNumber->setTextureFromSpriteFrame(name,w,h);
-        numArray->addObject(pNumber);
+        numArray.pushBack(pNumber);
         pNumber->setNumber(0);
         pNumber->setPosition(ccp(m_point.x + (m_maxCol/2.0-i*1.0)*w, m_point.y));
         pNumber->setAnchorPoint(ccp(1, 0.5));
