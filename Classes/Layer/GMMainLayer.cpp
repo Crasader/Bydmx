@@ -60,7 +60,7 @@ bool GMMainLayer::init()
     
     CCRemoveUnusedAllSpriteFrames();
      
-    gameLayer = new GMGameLayer();//GMGameLayer::create();
+    gameLayer = GMGameLayer::create();
 //    this->addChild(gameLayer,0);
     
     int bgIndex = GMPublicMethod::sharedPublicMethod()->getCheckpointsIndex();

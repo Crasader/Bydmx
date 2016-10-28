@@ -118,7 +118,7 @@ CCScene* GMGameLayer::scene()
 
 GMGameLayer::GMGameLayer()
 {
-	init();
+	//init();
 }
 bool GMGameLayer::init()
 {
@@ -128,7 +128,6 @@ bool GMGameLayer::init()
 	{
 		return false;
 	}
-	this->setTouchEnabled(true);
 
 	gameMode = GMPublicMethod::sharedPublicMethod()->getGameMode();
 	billingModel = GMPublicMethod::sharedPublicMethod()->getBillingModel();
@@ -159,6 +158,7 @@ bool GMGameLayer::init()
 
 	listener->setSwallowTouches(true);
 
+	listener->onTouchBegan = CC_CALLBACK_2(GMGameLayer::onTouchBegan, this);
 	listener->onTouchMoved = CC_CALLBACK_2(GMGameLayer::onTouchMoved, this);
 	listener->onTouchEnded = CC_CALLBACK_2(GMGameLayer::onTouchEnded, this);
 
@@ -3783,10 +3783,16 @@ void GMGameLayer::removePromptOpenCannon(CCNode *dialog)
 }
 
 //#pragma mark- touch
-void GMGameLayer::onTouchesMoved(CCSet* touches, CCEvent* event)
+
+bool GMGameLayer::onTouchesBegan(Touch* touches, CCEvent* event)
+{
+	return true;
+}
+
+void GMGameLayer::onTouchesMoved(Touch* touches, CCEvent* event)
 {}
 
-void GMGameLayer::onTouchesEnded(CCSet* touches, CCEvent* event)
+void GMGameLayer::onTouchesEnded(Touch* touches, CCEvent* event)
 {
 	/**************************************************************************
 	 *引导模式
@@ -3811,7 +3817,7 @@ void GMGameLayer::onTouchesEnded(CCSet* touches, CCEvent* event)
 		return;
 	}
 	/**************************************************************************/
-	CCTouch* touch = (CCTouch*)( touches->anyObject() );
+	CCTouch* touch = (CCTouch*)( touches );
 	CCPoint location = touch->getLocationInView();
 	//    locationInView(touch->view());
 	

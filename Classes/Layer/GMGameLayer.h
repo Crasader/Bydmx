@@ -400,8 +400,9 @@ private:
 	//virtual void onTouchEnded(coClicked();//Android 返回键
 
 protected:    
-	void onTouchesMoved(CCSet* touches, CCEvent* event);
-	void onTouchesEnded(CCSet* touches, CCEvent* event);
+	bool onTouchesBegan(Touch* touches, CCEvent* event);
+	void onTouchesMoved(Touch* touches, CCEvent* event);
+	void onTouchesEnded(Touch* touches, CCEvent* event);
 };
 
 #endif /* defined(__FishX__GMGameLayer__) */

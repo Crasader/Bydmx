@@ -119,7 +119,7 @@ private:
     
     void removeTipView(float dt);
     
-    CCMenuItemSprite *addMenu(const char *normal,const char *selected,bool filpx,CCPoint point,SEL_MenuHandler selector,CCPoint anc);
+    CCMenuItemSprite *addMenu(const char *normal,const char *selected,bool filpx,CCPoint point,ccMenuCallback selector,CCPoint anc);
     
     virtual bool onTouchBegan (CCTouch *pTouch, CCEvent *pEvent);
     virtual void onTouchMoved (CCTouch *pTouch, CCEvent *pEvent);

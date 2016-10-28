@@ -173,14 +173,14 @@ void GMCardLayer::setRepeatScale(CCNode *node)
     node->runAction(repeatForever);
 }
 
-CCMenuItemSprite* GMCardLayer::addMenu(const char *normal,const char *selected,bool filpx,CCPoint point,SEL_MenuHandler selector,CCPoint anc){
+CCMenuItemSprite* GMCardLayer::addMenu(const char *normal,const char *selected,bool filpx,CCPoint point,ccMenuCallback selector,CCPoint anc){
     CCSprite *normalSprite1 = CCSprite::createWithSpriteFrameName(normal);
     if(filpx)
         normalSprite1->setFlipX(true);
     CCSprite *selectedSprite1 = CCSprite::createWithSpriteFrameName(selected);
     if(filpx)
         selectedSprite1->setFlipX(true);
-    CCMenuItemSprite* tempItem = CCMenuItemSprite::create(normalSprite1, selectedSprite1,nullptr);
+    CCMenuItemSprite* tempItem = CCMenuItemSprite::create(normalSprite1, selectedSprite1,selector);
     SetScale2(tempItem, Scale_X);
     tempItem->setPosition( point );
     tempItem->setAnchorPoint( anc );
@@ -208,7 +208,7 @@ void GMCardLayer::initElement(){
 //    SetScale2(arrow1, Scale_X);
 //    arrow1->setPosition(ccp(40*Scale_X, WINSIZE_H/2-20*Scale_X));
     CCPoint point = ccp(40*Scale_X, WINSIZE_H/2-20*Scale_X);
-    arrow1 = addMenu("xuanzgk011.png","xuanzgk011.png",true,point,menu_selector(GMCardLayer::arrowAtion1),ccp(0.5,0.5));
+    arrow1 = addMenu("xuanzgk011.png","xuanzgk011.png",true,point,CC_CALLBACK_1(GMCardLayer::arrowAtion1,this),ccp(0.5,0.5));
     arrow2 = NULL;
 //    CCSprite *normalSprite2 = CCSprite::createWithSpriteFrameName("xuanzgk010.png");
 //    CCSprite *selectedSprite2 = CCSprite::createWithSpriteFrameName("xuanzgk011.png");
@@ -216,7 +216,7 @@ void GMCardLayer::initElement(){
 //    SetScale2(arrow2, Scale_X);
 //    arrow2->setPosition(ccp(WINSIZE_W-40*Scale_X, WINSIZE_H/2-20*Scale_X));
     point = ccp(WINSIZE_W-40*Scale_X, WINSIZE_H/2-20*Scale_X);
-    arrow2 = addMenu("xuanzgk011.png","xuanzgk011.png",false,point,menu_selector(GMCardLayer::arrowAtion2),ccp(0.5,0.5));
+    arrow2 = addMenu("xuanzgk011.png","xuanzgk011.png",false,point,CC_CALLBACK_1(GMCardLayer::arrowAtion2,this),ccp(0.5,0.5));
     setRepeatScale(arrow2);
     /*
      *  下面的三个选择按钮
@@ -228,7 +228,7 @@ void GMCardLayer::initElement(){
 //    back1->setAnchorPoint(ccp(0,0));
 //    back1->setPosition(ccp(10*Scale_X,5*Scale_X));
     point = ccp(10*Scale_X,5*Scale_X);
-    CCMenuItemSprite *back1 = addMenu("xuanzgk005.png","xuanzgk006.png",false,point,menu_selector(GMCardLayer::backAction),ccp(0,0));
+    CCMenuItemSprite *back1 = addMenu("xuanzgk005.png","xuanzgk006.png",false,point,CC_CALLBACK_1(GMCardLayer::backAction,this),ccp(0,0));
     
 //    CCSprite *xuanzgk001 = CCSprite::createWithSpriteFrameName("xuanzgk001.png");
 //    CCSprite *xuanzgk002 = CCSprite::createWithSpriteFrameName("xuanzgk002.png");
@@ -237,7 +237,7 @@ void GMCardLayer::initElement(){
 //    gold->setAnchorPoint(ccp(0.5,0));
 //    gold->setPosition(ccp(WINSIZE_W/2,5*Scale_X));
     point = ccp(WINSIZE_W/2,5*Scale_X);
-    CCMenuItemSprite *gold = addMenu("xuanzgk001.png","xuanzgk002.png",false,point,menu_selector(GMCardLayer::goleAction),ccp(0.5,0));
+    CCMenuItemSprite *gold = addMenu("xuanzgk001.png","xuanzgk002.png",false,point,CC_CALLBACK_1(GMCardLayer::goleAction,this),ccp(0.5,0));
     
 //    CCSprite *xuanzgk004 = CCSprite::createWithSpriteFrameName("xuanzgk004.png");
 //    startMenu = CCMenuItemSprite::create(xuanzgk004, xuanzgk004, CC_CALLBACK_1(GMCardLayer::startAction));
@@ -246,7 +246,7 @@ void GMCardLayer::initElement(){
 //    startMenu->setAnchorPoint(ccp(1,0));
 //    startMenu->setPosition(ccp(WINSIZE_W-10*Scale_X,5*Scale_X));
     point = ccp(WINSIZE_W-10*Scale_X,5*Scale_X);
-    startMenu = addMenu("xuanzgk004.png","xuanzgk004.png",false,point,menu_selector(GMCardLayer::startAction),ccp(1,0));
+    startMenu = addMenu("xuanzgk004.png","xuanzgk004.png",false,point,CC_CALLBACK_1(GMCardLayer::startAction,this),ccp(1,0));
     startMenu->setEnabled(false);
     
     otherMenu = CCMenu::create(arrow1,arrow2,back1,gold,startMenu,NULL);
@@ -705,7 +705,7 @@ void GMCardLayer::startAction(Ref *pSender)
         //this->unschedule(schedule_selector(GMCardLayer::removeWaves));
         GMAudioPlay::sharedAudioPlay()->playButtonEffect();
         
-        CCScene *pScene = CCTransitionFade::create(0.0, GMMainLayer::scene(), Color3B::WHITE);
+        CCScene *pScene = CCTransitionFade::create(0.0f, GMMainLayer::scene(), Color3B::WHITE);
         CCDirector::sharedDirector()->replaceScene(pScene);
     }
 }
